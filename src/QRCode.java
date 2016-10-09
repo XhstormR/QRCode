@@ -30,7 +30,7 @@ public class QRCode {
 
         HashMap<EncodeHintType, Object> map = new HashMap<>();
         map.put(EncodeHintType.CHARACTER_SET, "utf-8");
-        map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);//Decode 出错，可以适当调节排错率
         map.put(EncodeHintType.MARGIN, 1);
         BitMatrix encode = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, x, y, map);
 
@@ -38,15 +38,14 @@ public class QRCode {
             BufferedImage qrCode = MatrixToImageWriter.toBufferedImage(encode, new MatrixToImageConfig(onColor, offColor));
             Graphics2D graphics = qrCode.createGraphics();
 
-            BufferedImage logo = ImageIO.read(new File("D:/logo1.png"));
+            BufferedImage logo = ImageIO.read(new File("D:/logo.png"));
             graphics.drawImage(logo, (qrCode.getWidth() - logo.getWidth()) / 2, (qrCode.getHeight() - logo.getHeight()) / 2, null);
             graphics.dispose();
             logo.flush();
             ImageIO.write(qrCode, format, out);
-            return;
+        } else {
+            MatrixToImageWriter.writeToPath(encode, format, out.toPath(), new MatrixToImageConfig(onColor, offColor));
         }
-
-        MatrixToImageWriter.writeToPath(encode, format, out.toPath(), new MatrixToImageConfig(onColor, offColor));
     }
 
     private static void Decode() throws IOException, NotFoundException {
