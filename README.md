@@ -6,4 +6,5 @@
 2. Decode
   * (String `QRCode 路径`)
 
+## Example
 ![](/assets/QRCode.png)
