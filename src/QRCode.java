@@ -15,41 +15,53 @@ import java.util.HashMap;
 
 public class QRCode {
     public static void main(String[] args) throws IOException, WriterException, NotFoundException {
-        Encode(true);
-        Decode();
+        Encode("http://xhstormr.tk/", "D:/123.png", "D:/logo.png");
+        Decode("D:/123.png");
     }
 
-    private static void Encode(boolean hasLogo) throws WriterException, IOException {
+    private static void Encode(String content, String path) throws WriterException, IOException {
         int x = 500;
         int y = 500;
         int onColor = 0xFF008AC9;
         int offColor = 0xFFCAE7F7;
-        String str = "http://xhstormr.tk/";
         String format = "png";
-        File out = new File("D:/123.png");
+        File out = new File(path);
 
         HashMap<EncodeHintType, Object> map = new HashMap<>();
         map.put(EncodeHintType.CHARACTER_SET, "utf-8");
         map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);//Decode 出错，可以适当调节排错率
         map.put(EncodeHintType.MARGIN, 1);
-        BitMatrix encode = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, x, y, map);
+        BitMatrix encode = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, x, y, map);
 
-        if (hasLogo) {
-            BufferedImage qrCode = MatrixToImageWriter.toBufferedImage(encode, new MatrixToImageConfig(onColor, offColor));
-            Graphics2D graphics = qrCode.createGraphics();
-
-            BufferedImage logo = ImageIO.read(new File("D:/logo.png"));
-            graphics.drawImage(logo, (qrCode.getWidth() - logo.getWidth()) / 2, (qrCode.getHeight() - logo.getHeight()) / 2, null);
-            graphics.dispose();
-            logo.flush();
-            ImageIO.write(qrCode, format, out);
-        } else {
-            MatrixToImageWriter.writeToPath(encode, format, out.toPath(), new MatrixToImageConfig(onColor, offColor));
-        }
+        MatrixToImageWriter.writeToPath(encode, format, out.toPath(), new MatrixToImageConfig(onColor, offColor));
     }
 
-    private static void Decode() throws IOException, NotFoundException {
-        File in = new File("D:/123.png");
+    private static void Encode(String content, String path, String logoPath) throws WriterException, IOException {
+        int x = 500;
+        int y = 500;
+        int onColor = 0xFF008AC9;
+        int offColor = 0xFFCAE7F7;
+        String format = "png";
+        File out = new File(path);
+
+        HashMap<EncodeHintType, Object> map = new HashMap<>();
+        map.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);//Decode 出错，可以适当调节排错率
+        map.put(EncodeHintType.MARGIN, 1);
+        BitMatrix encode = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, x, y, map);
+
+        BufferedImage qrCode = MatrixToImageWriter.toBufferedImage(encode, new MatrixToImageConfig(onColor, offColor));
+        Graphics2D graphics = qrCode.createGraphics();
+
+        BufferedImage logo = ImageIO.read(new File(logoPath));
+        graphics.drawImage(logo, (qrCode.getWidth() - logo.getWidth()) / 2, (qrCode.getHeight() - logo.getHeight()) / 2, null);
+        graphics.dispose();
+        logo.flush();
+        ImageIO.write(qrCode, format, out);
+    }
+
+    private static void Decode(String path) throws IOException, NotFoundException {
+        File in = new File(path);
         BufferedImage qrCode = ImageIO.read(in);
 
         BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(qrCode)));
