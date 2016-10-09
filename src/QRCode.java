@@ -15,8 +15,8 @@ import java.util.HashMap;
 
 public class QRCode {
     public static void main(String[] args) throws IOException, WriterException, NotFoundException {
-        Encode("http://xhstormr.tk/", "D:/123.png", "D:/logo.png");
-        Decode("D:/123.png");
+        Encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
+        Decode("D:/QRCode.png");
     }
 
     private static void Encode(String content, String path) throws WriterException, IOException {
