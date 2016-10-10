@@ -7,4 +7,10 @@
   * (String `QRCode 路径`)
 
 ## Example
+
+```java
+Encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
+Decode("D:/QRCode.png");
+```
+
 ![](/assets/QRCode.png)
