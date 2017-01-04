@@ -15,11 +15,11 @@ import java.util.HashMap;
 
 public class QRCode {
     public static void main(String[] args) throws IOException, WriterException, NotFoundException {
-        Encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
-        Decode("D:/QRCode.png");
+        encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
+        decode("D:/QRCode.png");
     }
 
-    private static void Encode(String content, String path) throws WriterException, IOException {
+    private static void encode(String content, String path) throws WriterException, IOException {
         int x = 500;
         int y = 500;
         int onColor = 0xFF008AC9;
@@ -36,7 +36,7 @@ public class QRCode {
         MatrixToImageWriter.writeToPath(encode, format, out.toPath(), new MatrixToImageConfig(onColor, offColor));
     }
 
-    private static void Encode(String content, String path, String logoPath) throws WriterException, IOException {
+    private static void encode(String content, String path, String logoPath) throws WriterException, IOException {
         int x = 500;
         int y = 500;
         int onColor = 0xFF008AC9;
@@ -60,7 +60,7 @@ public class QRCode {
         ImageIO.write(qrCode, format, out);
     }
 
-    private static void Decode(String path) throws IOException, NotFoundException {
+    public static String decode(String path) throws IOException, NotFoundException {
         File in = new File(path);
         BufferedImage qrCode = ImageIO.read(in);
 
@@ -68,8 +68,12 @@ public class QRCode {
 
         HashMap<DecodeHintType, Object> map = new HashMap<>();
         map.put(DecodeHintType.CHARACTER_SET, "utf-8");
-        Result decode = new MultiFormatReader().decode(binaryBitmap, map);
 
-        System.out.println(decode);
+        try {
+            Result decode = new MultiFormatReader().decode(binaryBitmap, map);
+            return decode.toString();
+        } catch (NotFoundException e) {
+            return "";
+        }
     }
 }
