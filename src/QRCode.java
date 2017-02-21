@@ -22,8 +22,10 @@ public class QRCode {
     private static void encode(String content, String path) throws WriterException, IOException {
         int x = 500;
         int y = 500;
-        int onColor = 0xFF008AC9;
-        int offColor = 0xFFCAE7F7;
+        
+        //0xFF 16位标识 随后6为色值
+        int onColor = 0xFFd33b2d;
+        int offColor = 0xFFfbfbfb;
         String format = "png";
         File out = new File(path);
 
