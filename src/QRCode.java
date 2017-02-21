@@ -23,7 +23,7 @@ public class QRCode {
         int x = 500;
         int y = 500;
         
-        //0xFF 16位标识 随后6为色值
+        //0xFF 16位标识 随后6位为色值
         int onColor = 0xFF008AC9;
         int offColor = 0xFFCAE7F7;
         String format = "png";
@@ -42,7 +42,7 @@ public class QRCode {
         int x = 500;
         int y = 500;
         
-        //0xFF 16位标识 随后6为色值
+        //0xFF 16位标识 随后6位为色值
         int onColor = 0xFF008AC9;
         int offColor = 0xFFCAE7F7;
         String format = "png";
