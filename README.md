@@ -9,8 +9,8 @@
 ## Example
 
 ```java
-Encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
-Decode("D:/QRCode.png");
+encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
+decode("D:/QRCode.png");
 ```
 
 ![](/assets/QRCode.png)
