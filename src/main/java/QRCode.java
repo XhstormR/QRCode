@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class QRCode {
-    public static void main(String[] args) throws IOException, WriterException, NotFoundException {
+    public static void main(String[] args) throws IOException, WriterException {
         encode("http://xhstormr.tk/", "D:/QRCode.png", "D:/Logo.png");
         String s = decode("D:/QRCode.png");
         System.out.println(s);
@@ -56,16 +56,17 @@ public class QRCode {
         BitMatrix encode = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, x, y, map);
 
         BufferedImage qrCode = MatrixToImageWriter.toBufferedImage(encode, new MatrixToImageConfig(onColor, offColor));
-        Graphics2D graphics = qrCode.createGraphics();
 
+        Graphics2D graphics = qrCode.createGraphics();
         BufferedImage logo = ImageIO.read(new File(logoPath));
         graphics.drawImage(logo, (qrCode.getWidth() - logo.getWidth()) / 2, (qrCode.getHeight() - logo.getHeight()) / 2, null);
         graphics.dispose();
         logo.flush();
+
         ImageIO.write(qrCode, format, out);
     }
 
-    public static String decode(String path) throws IOException, NotFoundException {
+    public static String decode(String path) throws IOException {
         File in = new File(path);
         BufferedImage qrCode = ImageIO.read(in);
 

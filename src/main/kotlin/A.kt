@@ -5,10 +5,9 @@ fun main(args: Array<String>) {
 }
 
 fun a(dir: String) {
-    val map: Map<String, Int> = File(dir).listFiles()
+    File(dir).listFiles()
             .map { QRCode.decode(it.toString()) }
             .groupBy { it }
             .mapValues { it.value.count() }
-    map
-            .forEach { (k, v) -> println("$k：$v") }
+            .forEach { k, v -> println("$k : $v") }
 }
